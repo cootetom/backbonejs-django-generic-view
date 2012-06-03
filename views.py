@@ -41,14 +41,14 @@ class BackbonejsModelView(View):
             return HttpResponse('', status=400)
         
         # If the REST function returns only one model instance then we should
-        # serialize only that put the PythonSerializer requires a list so put
+        # serialize only that but the PythonSerializer requires a list so put
         # it into a list and change it back to an object after PythonSerializer.
         return_single_obj = False
         if not isinstance(query_set, QuerySet):
             query_set = [query_set]
             return_single_obj = True
             
-        # We need to modify the hash of data that PythonSerializer into something
+        # We need to modify the hash of data that PythonSerializer creates into something
         # that backbonejs will understand.
         obj_set = PythonSerializer().serialize(query_set)
         backbonejs_set = []
@@ -76,7 +76,7 @@ class BackbonejsModelView(View):
             return self.model.objects.all()
     
     def post(self, request):
-        '''Create a new object. Validate using a form is required. Return the created object.'''
+        '''Create a new object. Validate using a form if required. Return the created object.'''
         if self.form is not None:
             form = self.form(request.DATA)
             if form.is_valid():
@@ -87,7 +87,7 @@ class BackbonejsModelView(View):
         return self.model.objects.create(**request.DATA)
     
     def put(self, request, pk):
-        '''Update an existing object. Validate using a form is required. Return the updated object.'''
+        '''Update an existing object. Validate using a form if required. Return the updated object.'''
         item = get_object_or_404(self.model, pk=pk)
         
         if self.form is not None:
