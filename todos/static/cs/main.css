@@ -1,0 +1,71 @@
+
+#todoapp {
+	width:600px;
+	margin:0px auto;
+	text-align:center;
+	font-family: 'arial narrow', sans-serif;
+}
+
+#newItem {
+	padding:10px;
+	width:300px;
+}
+
+#todoList {
+	list-style-type:none;
+	padding:0px;
+	margin:10px auto;
+	width:300px;
+}
+#todoList li {
+	text-align:left;
+	border-bottom:1px solid #ccc;
+}
+	#todoList li .doneChk,
+	#todoList li .description {
+		line-height:40px;
+		vertical-align:middle;
+	}
+	
+	#todoList li .description {
+		display:inline-block;
+		width:240px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	
+	#todoList li:hover {
+		font-style:italic;
+	}
+
+#todoList .edit { 
+	display:none; 
+	padding:10px;
+	width:280px;
+}
+	#todoList .editing .doneChk,
+	#todoList .editing .description,
+	#todoList .editing .delete { display:none; }
+	#todoList .editing .edit { display:inline; }
+	
+#todoList .done .description {
+	text-decoration:line-through;
+}
+
+#todoList .delete {
+	height:40px;
+	width:24px;
+	cursor:pointer;
+	display:block;
+	float:right;
+	background: url('../im/delete.png') center left no-repeat transparent;
+}
+
+#footer {
+	width:600px;
+	margin:50px auto;
+	text-align:center;
+	font-size:0.7em;
+	font-family: 'arial', sans-serif;
+}
