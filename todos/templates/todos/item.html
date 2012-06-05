@@ -1,6 +1,0 @@
-<li id="todo{{ item.id }}"{% if item.done %} class="done"{% endif %}>
-	<input type="checkbox" class="doneChk" {% if item.done %}checked="checked"{% endif %} />
-	<span class="description">{{ item.description }}</span>
-	<span class="delete"></span>
-	<input type="text" class="edit" value="{{ item.description }}" title="press enter to save" />
-</li>

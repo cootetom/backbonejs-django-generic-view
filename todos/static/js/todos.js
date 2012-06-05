@@ -41,17 +41,21 @@
 		
 		initialize: function() {
 			this.model.bind('sync', this.render, this);
+			this.setElement($('#itemView').html());
 		},
 		
 		render: function () {
-			var that = this;
-			if (this.model.id) {
-				$.get('/todo_render_single/' + this.model.id, function(r) {
-					var oldEl = that.$el;
-					that.setElement($(r));
-					$(oldEl).replaceWith(that.$el);
-				});
+			if (this.model.get('done')) {
+				this.$el.addClass('done').children('.doneChk').attr('checked', 'checked');
 			}
+			else {
+				this.$el.removeClass('done').children('.doneChk').attr('checked', false);
+			}
+			
+			this.$el.children('.description').html(this.model.get('description'));
+			this.$el.children('.edit').val(this.model.get('description'));
+			this.$el.removeClass('editing');
+		
 			return this;
 		},
 		
@@ -111,17 +115,14 @@
 		
 		createToDo: function(e) {
 			if (e.keyCode === 13) {
-				var todo = new ToDoModel(),
-					that = this;
+				var todo = new ToDoModel();
 					
 				todo.save({
 						description: $('#newItem').val(),
 						done: false
 					}, {
 						success: function() {
-							var view = new ToDoView({model: todo});
-							view.render();
-							$('#todoList').append(view.$el);
+							new ToDoView({model: todo}).render().$el.appendTo('#todoList');
 							$('#newItem').val('');
 						},
 						error: function(model, error) {
@@ -132,19 +133,12 @@
 		},
 		
 		render: function () {
-			var that = this;
 			var todos = new ToDoCollection();
+			
 			todos.fetch({
 				success: function(todos) {
-					$.get('/todo_render_all/', function(r) {
-						$('#todoList').html(r);
-						
-						todos.each(function(m) {
-							new ToDoView({
-								el: $('#todo' + m.id),
-								model: m
-							});
-						});
+					todos.each(function(m) {
+						new ToDoView({model: m}).render().$el.appendTo('#todoList');
 					});
 				}
 			});

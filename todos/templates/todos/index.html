@@ -13,3 +13,14 @@
 	<p>Created by <a href="http://tomcoote.co.uk">Tom Coote</a></p>
 </div>
 {% endblock %}
+
+{% block js-templates %}
+<script id="itemView" type="text/html">
+<li id="todo">
+	<input type="checkbox" class="doneChk" />
+	<span class="description"></span>
+	<span class="delete"></span>
+	<input type="text" class="edit" title="press enter to save" />
+</li>
+</script>
+{% endblock %}
